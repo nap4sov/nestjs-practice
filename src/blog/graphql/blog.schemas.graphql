@@ -1,0 +1,58 @@
+type User {
+  _id: String!
+  email: String!
+  name: String!
+  avatar: String
+  extra_details: String
+  skills: String
+  profession: String
+  details: String
+  dateCreated: String!
+}
+
+type Article {
+  _id: String!
+  title: String!
+  fullText: String!
+  description: String
+  dateCreated: String!
+  image: String
+  likes: [String]!
+  postedBy: User
+  comments: [Comment]!
+}
+
+type Comment {
+  _id: String!
+  commentedBy: User
+  followedCommentID: String
+  postID: String!
+  text: String!
+  dateCreated: String!
+  likes: [String]
+}
+
+type Pagination {
+  limit: String
+  skip: String
+  total: String
+}
+
+input NewArticle {
+  title: String!
+  fullText: String!
+  description: String!
+}
+
+type Query {
+  allArticles: [Article]
+  article(id: ID!): Article
+  articleAuthor(id: ID!): User
+  comments(id: ID!): [Comment]
+  comment(id: ID!): Comment
+  commentAuthor(id: ID!): User
+}
+
+type Mutation {
+  addArticle(article: NewArticle!): Article
+}
