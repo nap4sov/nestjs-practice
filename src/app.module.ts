@@ -8,7 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { BlogModule } from './blog/blog.module';
 import { AuthzModule } from './authz/authz.module';
 import { LoggerModule } from 'nestjs-pino';
-import { TasksModule } from './tasks/tasks.module';
+// import { TasksModule } from './tasks/tasks.module';
 import { BinanceModule } from './binance/binance.module';
 import { ChatEventsModule } from './chat/events.module';
 
@@ -39,7 +39,7 @@ import { ChatEventsModule } from './chat/events.module';
     ScheduleModule.forRoot(),
     BlogModule,
     AuthzModule,
-    TasksModule,
+    // TasksModule,
     BinanceModule,
     ChatEventsModule,
   ],
