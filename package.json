@@ -6,8 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "build": "nest build",
-    "postbuild": "rm -rf dist && tsc -p tsconfig.build.json && copyfiles ./**/*.graphql dist/",
+    "build": "nest build && copyfiles ./**/*.graphql dist/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
