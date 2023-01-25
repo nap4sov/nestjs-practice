@@ -7,7 +7,6 @@ import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { BlogModule } from './blog/blog.module';
 import { AuthzModule } from './authz/authz.module';
-import { LoggerModule } from 'nestjs-pino';
 // import { TasksModule } from './tasks/tasks.module';
 import { BinanceModule } from './binance/binance.module';
 import { ChatEventsModule } from './chat/events.module';
@@ -15,16 +14,6 @@ import { ChatEventsModule } from './chat/events.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        customProps: () => ({
-          context: 'HTTP',
-        }),
-        transport: {
-          target: 'pino-pretty',
-        },
-      },
-    }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
