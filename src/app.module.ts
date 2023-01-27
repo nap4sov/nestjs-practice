@@ -7,9 +7,11 @@ import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { BlogModule } from './blog/blog.module';
 import { AuthzModule } from './authz/authz.module';
-// import { TasksModule } from './tasks/tasks.module';
+import { TasksModule } from './tasks/tasks.module';
 import { BinanceModule } from './binance/binance.module';
 import { ChatEventsModule } from './chat/events.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { MailingModule } from './mailing/mailing.module';
 
 @Module({
   imports: [
@@ -28,9 +30,13 @@ import { ChatEventsModule } from './chat/events.module';
     ScheduleModule.forRoot(),
     BlogModule,
     AuthzModule,
-    // TasksModule,
+    TasksModule,
     BinanceModule,
     ChatEventsModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+    MailingModule,
   ],
 })
 export class AppModule {}

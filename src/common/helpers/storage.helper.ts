@@ -1,10 +1,7 @@
 import { promises as fs, existsSync } from 'fs';
 
-export const getFile = async (
-  path: string,
-  encoding,
-): Promise<string | Buffer> => {
-  return encoding ? fs.readFile(path, encoding) : fs.readFile(path, {});
+export const getFile = async (path: string): Promise<string | Buffer> => {
+  return fs.readFile(path, {});
 };
 
 export const writeToFile = async (
