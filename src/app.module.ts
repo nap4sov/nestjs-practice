@@ -24,6 +24,8 @@ import { AppController } from './app.controller';
         path: join(process.cwd(), 'src/graphql.ts'),
       },
       include: [BlogModule],
+      introspection: true,
+      playground: true,
     }),
     MongooseModule.forRoot(process.env.MONGODB_CONNECTION, {
       connectionName: 'messages',
