@@ -12,6 +12,7 @@ import { BinanceModule } from './binance/binance.module';
 import { ChatEventsModule } from './chat/events.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MailingModule } from './mailing/mailing.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -38,5 +39,6 @@ import { MailingModule } from './mailing/mailing.module';
     }),
     MailingModule,
   ],
+  controllers: [AppController],
 })
 export class AppModule {}
