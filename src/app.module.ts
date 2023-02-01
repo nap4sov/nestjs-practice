@@ -13,6 +13,8 @@ import { ChatEventsModule } from './chat/events.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MailingModule } from './mailing/mailing.module';
 import { AppController } from './app.controller';
+import { AllExceptionsFilter } from './common/exceptionFilters/allException.filter';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -42,5 +44,11 @@ import { AppController } from './app.controller';
     MailingModule,
   ],
   controllers: [AppController],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+  ],
 })
 export class AppModule {}
