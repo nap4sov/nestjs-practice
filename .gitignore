@@ -37,7 +37,7 @@ lerna-debug.log*
 .env
 
 # compiled Gql 
-.graphql.ts
+graphql.ts
 
 # storage folder
 /storage
