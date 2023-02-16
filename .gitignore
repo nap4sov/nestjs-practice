@@ -41,3 +41,7 @@ graphql.ts
 
 # storage folder
 /storage
+
+# lockfiles
+package-lock.json
+yarn.lock
