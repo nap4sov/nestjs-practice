@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
-import { IComment, IUser } from './interfaces/response';
+import { IComment, IUser } from '../interfaces/response';
 
 @Injectable()
 export class CommentsService {

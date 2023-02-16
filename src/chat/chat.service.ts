@@ -7,7 +7,7 @@ import { CreateMessageDto } from './dto/message.dto';
 @Injectable()
 export class ChatService {
   constructor(
-    @InjectModel(Message.name, 'messages')
+    @InjectModel(Message.name)
     private messageModel: Model<MessageDocument>,
   ) {}
 

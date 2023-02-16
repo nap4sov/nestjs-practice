@@ -1,4 +1,4 @@
-import { Body } from '@nestjs/common';
+import { Body, UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -8,7 +8,8 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { ArticlesService } from './articles.service';
-import { CreateArticleDto } from './dto/article.dto';
+import { CreateArticleDto } from '../dto/article.dto';
+import { GqlAuthGuard } from 'src/authz/gqlAuth.guard';
 
 @Resolver('Article')
 export class ArticlesResolver {
@@ -38,7 +39,8 @@ export class ArticlesResolver {
   }
 
   @Mutation()
-  async addArticle(@Body() body: { article: CreateArticleDto }) {
+  @UseGuards(GqlAuthGuard)
+  addArticle(@Body() body: { article: CreateArticleDto }) {
     return this.articlesService.createArticle(body.article);
   }
 }

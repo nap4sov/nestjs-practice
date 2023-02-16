@@ -1,4 +1,4 @@
 export interface IStatObject {
-  averageprice: string;
-  timestamp: number;
+  averagePrice: string;
+  timeStamp: number;
 }

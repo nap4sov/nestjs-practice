@@ -5,8 +5,10 @@ import { CommentsResolver } from './comments.resolver';
 
 @Module({
   imports: [
-    HttpModule.register({
-      baseURL: 'http://test-blog-api.ficuslife.com/api/v1/',
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        baseURL: process.env.FICUS_API_URL,
+      }),
     }),
   ],
   providers: [CommentsService, CommentsResolver],

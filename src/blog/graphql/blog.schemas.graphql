@@ -1,7 +1,7 @@
 type User {
   _id: String!
-  email: String!
-  name: String!
+  email: String
+  name: String
   avatar: String
   extra_details: String
   skills: String

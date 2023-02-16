@@ -4,35 +4,35 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  ContextType,
 } from '@nestjs/common';
-import { HttpAdapterHost } from '@nestjs/core';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
-  constructor(private readonly httpAdapterHost: HttpAdapterHost) {}
+  catch(exception: HttpException, host: ArgumentsHost) {
+    switch (host.getType() as ContextType | 'graphql') {
+      case 'graphql':
+        return exception;
+      default:
+        const ctx = host.switchToHttp();
+        const response = ctx.getResponse();
 
-  catch(exception: unknown, host: ArgumentsHost): void {
-    const { httpAdapter } = this.httpAdapterHost;
+        const httpStatus =
+          exception instanceof HttpException
+            ? exception.getStatus()
+            : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const ctx = host.switchToHttp();
+        const message = exception.message || 'Internal server error';
 
-    const httpStatus =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+        const responseBody = {
+          statusCode: httpStatus,
+          message,
+          timestamp: new Date().toISOString(),
+          path: ctx.getRequest().url,
+          method: ctx.getRequest().method,
+        };
 
-    const message =
-      exception instanceof HttpException
-        ? exception.message
-        : 'Internal server error';
-
-    const responseBody = {
-      statusCode: httpStatus,
-      message,
-      timestamp: new Date().toISOString(),
-      path: httpAdapter.getRequestUrl(ctx.getRequest()),
-    };
-
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+        response.status(httpStatus).json(responseBody);
+    }
   }
 }

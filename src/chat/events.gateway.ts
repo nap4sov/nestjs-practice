@@ -7,7 +7,7 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { CreateMessageDto } from './dto/message.dto';
 
@@ -23,7 +23,8 @@ export class ChatEventsGateway implements OnGatewayConnection {
   server: Server;
 
   async handleConnection() {
-    this.logger.log('New connection');
+    process.env.NODE_ENV === 'development' && this.logger.log('New connection');
+
     const messageHistory = await this.chatService.findAll();
     this.server.emit('messageHistory', messageHistory);
   }
@@ -37,7 +38,7 @@ export class ChatEventsGateway implements OnGatewayConnection {
   @SubscribeMessage('message')
   async handleSendMessage(
     @MessageBody() payload: CreateMessageDto,
-    @ConnectedSocket() client: any,
+    @ConnectedSocket() client: Socket,
   ) {
     const savedMessage = await this.chatService.create(payload);
     this.server.emit('recMessage', { ...savedMessage, clientId: client.id });

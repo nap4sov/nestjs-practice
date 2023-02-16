@@ -1,25 +1,18 @@
 import * as moment from 'moment';
+import * as pug from 'pug';
 import { IStatObject } from './mailing.interfaces';
 
-const createStatsEmailMarkup = (stats: IStatObject[]) => {
-  return `<h2 style="text-align: center">Requested Bitcoin stats</h2><table style="border-collapse: collapse; width: 100%;"><tr><th style="padding: 15px; background-color: #04aa6d; color: white">Average price</th><th style="padding: 15px; background-color: #04aa6d; color: white">Time</th></tr>${stats
-    .map(
-      ({ averageprice, timestamp }, idx) =>
-        `<tr ${
-          idx % 2 !== 0 && 'style="background-color: #f2f2f2"'
-        }><td style="padding: 15px; text-align: center;">${averageprice
-          .split('"')
-          .join(
-            '',
-          )}</td><td style="padding: 15px; text-align: center;">${moment(
-          timestamp,
-        ).format('DD MMM YYYY HH:mm')}</td></tr>`,
-    )
-    .join('')}</table>`;
-};
+const compiledStatsFunction = pug.compileFile(
+  'src/mailing/templates/statsEmail.pug',
+);
 
 export const composeStatsEmail = (recipient: string, stats: IStatObject[]) => {
-  const htmlTable = createStatsEmailMarkup(stats);
+  const htmlTable = compiledStatsFunction(
+    stats.map((stat) => ({
+      ...stat,
+      timeStamp: moment(stat.timeStamp).format('DD MMM YYYY HH:mm'),
+    })),
+  );
 
   return {
     to: recipient,

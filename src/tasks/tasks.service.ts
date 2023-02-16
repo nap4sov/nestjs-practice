@@ -21,9 +21,10 @@ export class TasksService {
       directory: 'storage',
       fileName: 'btc_average.csv',
       data: parsedData + '\n',
-      headers: 'average price, timestamp',
+      headers: 'averagePrice, timeStamp',
     });
 
-    this.logger.log('Written to file');
+    process.env.NODE_ENV === 'development' &&
+      this.logger.log('Written to file');
   }
 }
