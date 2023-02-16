@@ -12,7 +12,7 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   // @UseGuards(AuthGuard('jwt'))
-  @ApiResponse({ type: Article, isArray: true })
+  @ApiResponse({ type: Article, isArray: true, status: 200 })
   @Get()
   async getAllArticles() {
     const response = await this.articlesService.getAllArticles();
@@ -24,7 +24,7 @@ export class ArticlesController {
     type: 'string',
     description: 'id of specific article',
   })
-  @ApiResponse({ type: Article })
+  @ApiResponse({ type: Article, status: 200 })
   @Get(':id')
   getArticleById(@Param() params) {
     return this.articlesService.getArticleById(params.id);
@@ -35,7 +35,7 @@ export class ArticlesController {
     type: 'string',
     description: 'id of specific article',
   })
-  @ApiResponse({ type: Comment, isArray: true })
+  @ApiResponse({ type: Comment, isArray: true, status: 200 })
   @Get(':id/comments')
   getCommentsByArticleId(@Param() params) {
     return this.articlesService.getCommentsByArticleId(params.id);
@@ -46,7 +46,7 @@ export class ArticlesController {
     type: 'string',
     description: 'id of specific user',
   })
-  @ApiResponse({ type: User })
+  @ApiResponse({ type: User, status: 200 })
   @Get('users/:id')
   getUserById(@Param() params) {
     return this.articlesService.getUserById(params.id);
@@ -54,7 +54,7 @@ export class ArticlesController {
 
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
-  @ApiResponse({ type: Article })
+  @ApiResponse({ type: Article, status: 201 })
   @Post()
   async createArticle(@Body() newArticle: CreateArticleDto) {
     return this.articlesService.createArticle(newArticle);

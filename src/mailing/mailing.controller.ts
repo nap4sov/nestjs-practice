@@ -22,7 +22,7 @@ export class MailingController {
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
   }
 
-  @ApiResponse({ type: Stats, isArray: true })
+  @ApiResponse({ type: Stats, isArray: true, status: 200 })
   @Get('stats')
   async getStats(): Promise<IStatObject[]> {
     const stats = await this.mailingService.getBtcStats();
