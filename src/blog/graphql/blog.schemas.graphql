@@ -47,10 +47,7 @@ input NewArticle {
 type Query {
   allArticles: [Article]
   article(id: ID!): Article
-  articleAuthor(id: ID!): User
-  comments(id: ID!): [Comment]
   comment(id: ID!): Comment
-  commentAuthor(id: ID!): User
 }
 
 type Mutation {
